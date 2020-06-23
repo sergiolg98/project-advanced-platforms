@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Simular Login ...", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
                 startActivity(i);
             }
         });
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Simular Registro ...", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
                 startActivity(i);
             }
         });
