@@ -73,12 +73,20 @@
                     android:text="Iniciar Sesión"
                     android:textColor="@android:color/white" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:text=" - ¿No tienes una cuenta? Regístrate gratis! - "
+                    android:textAlignment="center"
+                    android:textStyle="italic" />
+
                 <Button
                     android:id="@+id/bt_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20sp"
-                    android:layout_marginTop="20sp"
+                    android:layout_marginTop="10sp"
                     android:layout_marginRight="20sp"
                     android:background="@color/colorAccent"
                     android:text="Registrarme"
@@ -183,12 +191,20 @@
                     android:text="Registro"
                     android:textColor="@android:color/white" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:text=" - ¿Ya tienes una cuenta? Inicia sesión - "
+                    android:textAlignment="center"
+                    android:textStyle="italic" />
+
                 <Button
                     android:id="@+id/bt_make_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20sp"
-                    android:layout_marginTop="20sp"
+                    android:layout_marginTop="10sp"
                     android:layout_marginRight="20sp"
                     android:background="@color/colorAccent"
                     android:text="Iniciar sesión"

@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
     /***
      * Interfaces
-        * Register
-        * Login
+        * Login / Register
+        *
         * Dashboard (lleva  Settings y About)
             * About (Info sobre el desarrollo)
             * Settings (Pantalla normal con Shared Preferences para los Ajustes con Preferencias)

@@ -22,9 +22,40 @@
                 android:id="@+id/tx_title_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Información"
+                android:text="Funcionalidades"
                 android:textSize="28sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/bt_light_info"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                app:srcCompat="@drawable/light_sensor" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:text="Disminuye el daño causado a tus ojos por la luz azul de la pantalla de tu dispositivo móvil!"
+                android:textAlignment="center"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:id="@+id/bt_raise_info"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                app:srcCompat="@drawable/raise_to_wake" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:text="No te desgastes! Levanta tu dispositivo para que se encienda rápidamente."
+                android:textAlignment="center"
+                android:textStyle="italic" />
+
         </LinearLayout>
     </ScrollView>
 
