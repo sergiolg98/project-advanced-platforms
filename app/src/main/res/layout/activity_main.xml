@@ -31,6 +31,7 @@
                 android:layout_height="200sp"
                 app:srcCompat="@drawable/light_setting_off" />
 
+            <!--
             <EditText
                 android:id="@+id/passwordInput"
                 android:layout_width="wrap_content"
@@ -42,6 +43,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/userNameInput"
                 android:width="200dp" />
+
+
 
             <Button
                 android:layout_width="wrap_content"
@@ -58,6 +61,7 @@
                 android:id="@+id/displayButton"
                 android:onClick="getData" />
 
+
             <Button
                 android:id="@+id/displayButton2"
                 android:layout_width="match_parent"
@@ -71,6 +75,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="cancelJob"
                 android:text="Cancel Job" />
+
+                -->
 
             <TextView
                 android:layout_width="wrap_content"

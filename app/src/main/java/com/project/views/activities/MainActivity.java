@@ -16,27 +16,80 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    EditText userName;
-    EditText password;
+
+    EditText userName, password;
     TextView dataView;
+    ImageView btAdjustBright;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        pref = getSharedPreferences("automaticBright", Context.MODE_PRIVATE);
 
-        userName = (EditText) findViewById(R.id.userNameInput);
-        password = (EditText) findViewById(R.id.passwordInput);
+        initWidgets();
+        btAdjustBright.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String state = pref.getString("state", "");
+                Log.i("SharedPref", "this:" + state);
+
+                if(state.equals("")){
+                    /* Activate JobService */
+                    SharedPreferences.Editor editor = pref .edit();
+                    editor.putString("state", "active"); editor.apply();
+                    scheduleJob();
+                    btAdjustBright.setImageResource(R.drawable.light_setting_on);
+                }
+                else{
+                    if(state.equals("inactive")){
+                        /* Activate JobService  */
+                        SharedPreferences.Editor editor = pref .edit();
+                        editor.putString("state", "active"); editor.apply();
+                        scheduleJob();
+                        btAdjustBright.setImageResource(R.drawable.light_setting_on);
+                    }
+                    else if(state.equals("active")){
+                        /* Stop JobService */
+                        SharedPreferences.Editor editor = pref .edit();
+                        editor.putString("state", "inactive"); editor.apply();
+                        cancelJob();
+                        btAdjustBright.setImageResource(R.drawable.light_setting_off);
+                    }
+
+                }
+
+            }
+        });
+
         dataView = (TextView) findViewById(R.id.dataTextView);
 
     }
 
-    public void scheduleJob(View v){
+    private void initWidgets(){
+        btAdjustBright = findViewById(R.id.bt_adjust_bright);
+
+        /* Init icon*/
+        String state = pref.getString("state", "");
+        if(state.equals("")){
+            btAdjustBright.setImageResource(R.drawable.light_setting_off);
+        }
+        else {
+            if (state.equals("inactive")) btAdjustBright.setImageResource(R.drawable.light_setting_off);
+            else if(state.equals("active")) btAdjustBright.setImageResource(R.drawable.light_setting_on);
+        }
+
+    }
+
+    public void scheduleJob(){
         ComponentName componentName = new ComponentName(this, DataJobService.class);
         JobInfo info = new JobInfo.Builder(123, componentName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
@@ -54,32 +107,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void cancelJob(View v){
+    public void cancelJob(){
         JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
         scheduler.cancel(123);
         Log.i(TAG, "Job Cancelled");
     }
 
-
-    // Lesson 64
-    //Save login info
-    public void saveData(View view){
-        SharedPreferences loginData = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = loginData.edit();
-        editor.putString("userName", userName.getText().toString());
-        editor.putString("password", password.getText().toString());
-        editor.apply();
-
-        Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
-    }
-
-    public void getData(View view){
-        SharedPreferences loginData = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        String name = loginData.getString("userName", "");
-        String pw = loginData.getString("password","");
-        String msg = "Saved User Name: " + name + "\nSaved Password: " + pw;
-        dataView.setText(msg);
-    }
 
     /***
      * Interfaces
