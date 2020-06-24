@@ -1,27 +1,22 @@
 package com.project.views.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
-import android.os.Bundle;
-
-import com.project.R;
-import com.project.background.DataJobService;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.project.R;
+import com.project.background.DataJobService;
+
+public class SettingsActivity extends AppCompatActivity {
+    private static final String TAG = "SettingsActivity";
 
     ImageView btAdjustBright;
     SharedPreferences pref;
@@ -29,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_settings);
         pref = getSharedPreferences("automaticBright", Context.MODE_PRIVATE);
 
         initWidgets();
@@ -125,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             * Detectar movimiento (Acelerometro)
             * Bluetooth? (Ver donde se podría aplicar la comunicación)
          * Service que haga que la luz baje por detrás
+         * Service para el Raise to Wake
      * Entregables
         * Subir a un Repositorio (Android & NodeJS)
         * Informe con capturas.

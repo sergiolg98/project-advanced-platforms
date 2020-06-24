@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.project.R;
-
-import org.apache.log4j.chainsaw.Main;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -26,7 +23,7 @@ public class DashboardActivity extends AppCompatActivity {
         btSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DashboardActivity.this, MainActivity.class));
+                startActivity(new Intent(DashboardActivity.this, SettingsActivity.class));
             }
         });
 
