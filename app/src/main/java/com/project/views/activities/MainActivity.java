@@ -23,8 +23,6 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    EditText userName, password;
-    TextView dataView;
     ImageView btAdjustBright;
     SharedPreferences pref;
 
@@ -70,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dataView = (TextView) findViewById(R.id.dataTextView);
 
     }
 
@@ -117,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     /***
      * Interfaces
         * Login / Register
-        *
+        * Profile (Un card más en Dashboard) -> lleve a una vista donde se muestren sus datos
         * Dashboard (lleva  Settings y About)
             * About (Info sobre el desarrollo)
             * Settings (Pantalla normal con Shared Preferences para los Ajustes con Preferencias)
