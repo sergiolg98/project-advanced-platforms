@@ -1,58 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".views.activities.MainActivity">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/passwordInput"
-        android:width="200dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/userNameInput"
-        android:width="200dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save Info"
-        android:id="@+id/saveButton"
-        android:onClick="saveData"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Desplegar info"
-        android:id="@+id/displayButton"
-        android:onClick="getData" />
-
-    <Button
-        android:id="@+id/displayButton2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="scheduleJob"
-        android:text="Schedule Job" />
+        android:layout_height="match_parent"
+        android:layout_margin="20sp">
 
-    <Button
-        android:id="@+id/displayButton3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="cancelJob"
-        android:text="Cancel Job" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/dataTextView" />
+            <TextView
+                android:id="@+id/tx_title_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ajustes"
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/bt_adjust_bright"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                app:srcCompat="@drawable/light_setting_off" />
+
+            <EditText
+                android:id="@+id/passwordInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userNameInput"
+                android:width="200dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Info"
+                android:id="@+id/saveButton"
+                android:onClick="saveData"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desplegar info"
+                android:id="@+id/displayButton"
+                android:onClick="getData" />
+
+            <Button
+                android:id="@+id/displayButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="scheduleJob"
+                android:text="Schedule Job" />
+
+            <Button
+                android:id="@+id/displayButton3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="cancelJob"
+                android:text="Cancel Job" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/dataTextView" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
