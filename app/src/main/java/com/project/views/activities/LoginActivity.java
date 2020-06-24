@@ -65,10 +65,13 @@ public class LoginActivity extends AppCompatActivity {
         btMakeRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RegisterTask().execute(
-                        registerName.getText().toString(), registerLastname.getText().toString(),
-                        registerUsername.getText().toString(), registerEmail.getText().toString(),
-                        registerPassword.getText().toString());
+                if(validateFields("R")){
+                    new RegisterTask().execute(
+                            registerName.getText().toString(), registerLastname.getText().toString(),
+                            registerUsername.getText().toString(), registerEmail.getText().toString(),
+                            registerPassword.getText().toString());
+                }
+                else Toast.makeText(context, "Todos los campos deben ser completados", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,6 +96,21 @@ public class LoginActivity extends AppCompatActivity {
         registerEmail = (EditText) findViewById(R.id.et_input_email);
         registerUsername = (EditText) findViewById(R.id.et_input_username);
         registerPassword = (EditText) findViewById(R.id.et_input_password);
+    }
+
+    private boolean validateFields(String type){
+        if(type.equals("R")){
+            //Register
+            if(registerName.getText().toString().equals("")) return false;
+            else if(registerLastname.getText().toString().equals("")) return false;
+            else if(registerEmail.getText().toString().equals("")) return false;
+            else if(registerUsername.getText().toString().equals("")) return false;
+            else if(registerPassword.getText().toString().equals("")) return false;
+        }
+        else if(type.equals("L")){
+            //Login
+        }
+        return true;
     }
 
 

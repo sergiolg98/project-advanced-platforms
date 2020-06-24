@@ -2,7 +2,7 @@ package com.project.config;
 
 public class ConstValue {
 
-    public static String MAIN_PREF = "LightCare";
+    public static final String MAIN_PREF = "LightCare";
 
     public static String SITE_URL = "https://api-rest-aquamajes.herokuapp.com"; //DEV
     //public static String SITE_URL = "http://localhost:3000";   //LOCAL
