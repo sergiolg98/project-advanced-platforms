@@ -26,57 +26,10 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/bt_adjust_bright"
+                android:id="@+id/bt_adjust_rase_to_wake"
                 android:layout_width="match_parent"
                 android:layout_height="200sp"
-                app:srcCompat="@drawable/light_setting_off" />
-
-            <!--
-            <EditText
-                android:id="@+id/passwordInput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/userNameInput"
-                android:width="200dp" />
-
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save Info"
-                android:id="@+id/saveButton"
-                android:onClick="saveData"
-                tools:ignore="HardcodedText" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Desplegar info"
-                android:id="@+id/displayButton"
-                android:onClick="getData" />
-
-
-            <Button
-                android:id="@+id/displayButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="scheduleJob"
-                android:text="Schedule Job" />
-
-            <Button
-                android:id="@+id/displayButton3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="cancelJob"
-                android:text="Cancel Job" />
-
-                -->
+                app:srcCompat="@drawable/raise_off" />
 
         </LinearLayout>
     </ScrollView>

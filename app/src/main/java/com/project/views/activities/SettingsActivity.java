@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.R;
 import com.project.background.DataJobService;
-import com.project.background.RaisetowakeService;
+import com.project.background.RaiseToWakeService;
 
 public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
@@ -25,56 +25,62 @@ public class SettingsActivity extends AppCompatActivity {
     private static final int JOB_ID = 123;
     private static final long REFRESH_INTERVAL  = 5 * 60 * 1000; // 5 seconds
 
-    ImageView btAdjustBright;
+    ImageView btAdjustRaseToWake;
     SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        pref = getSharedPreferences("automaticBright", Context.MODE_PRIVATE);
 
         initWidgets();
-        btAdjustBright.setOnClickListener(new View.OnClickListener() {
+        btAdjustRaseToWake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                pref = getSharedPreferences("automaticRaseToWake", Context.MODE_PRIVATE);
                 String state = pref.getString("state", "");
                 Log.i("SharedPref", "this:" + state);
 
                 if(state.equals("")){
 
-                    activateRaise(); /** Experimental */
+                    activateRaiseToWake();
 
-                    /* Activate JobService */
+                    /*Store Preferences*/
                     SharedPreferences.Editor editor = pref .edit();
                     editor.putString("state", "active");
                     editor.apply();
 
+                    /* Activate JobService */
                     scheduleJob();
-                    btAdjustBright.setImageResource(R.drawable.light_setting_on);
+                    btAdjustRaseToWake.setImageResource(R.drawable.raise_on);
                 }
                 else{
                     if(state.equals("inactive")){
 
-                        activateRaise(); /** Experimental */
+                        activateRaiseToWake();
 
-                        /* Activate JobService  */
+                        /*Store Preferences*/
                         SharedPreferences.Editor editor = pref .edit();
                         editor.putString("state", "active");
                         editor.apply();
 
+                        /* Activate JobService  */
                         scheduleJob();
-                        btAdjustBright.setImageResource(R.drawable.light_setting_on);
+                        btAdjustRaseToWake.setImageResource(R.drawable.raise_on);
                     }
                     else if(state.equals("active")){
-                        /* Stop JobService */
+
+                        stopRaiseToWake();
+
+                        /*Store Preferences*/
                         SharedPreferences.Editor editor = pref .edit();
                         editor.putString("state", "inactive");
                         editor.apply();
 
+                        /* Stop JobService */
                         cancelJob();
-                        btAdjustBright.setImageResource(R.drawable.light_setting_off);
+                        btAdjustRaseToWake.setImageResource(R.drawable.raise_off);
                     }
 
                 }
@@ -86,16 +92,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initWidgets(){
-        btAdjustBright = findViewById(R.id.bt_adjust_bright);
+        btAdjustRaseToWake = findViewById(R.id.bt_adjust_rase_to_wake);
 
         /* Init icon*/
+        pref = getSharedPreferences("automaticRaseToWake", Context.MODE_PRIVATE);
         String state = pref.getString("state", "");
         if(state.equals("")){
-            btAdjustBright.setImageResource(R.drawable.light_setting_off);
+            btAdjustRaseToWake.setImageResource(R.drawable.raise_off);
         }
         else {
-            if (state.equals("inactive")) btAdjustBright.setImageResource(R.drawable.light_setting_off);
-            else if(state.equals("active")) btAdjustBright.setImageResource(R.drawable.light_setting_on);
+            if (state.equals("inactive")) btAdjustRaseToWake.setImageResource(R.drawable.raise_off);
+            else if(state.equals("active")) btAdjustRaseToWake.setImageResource(R.drawable.raise_on);
         }
 
     }
@@ -154,10 +161,16 @@ public class SettingsActivity extends AppCompatActivity {
         return false;
     }
 
-    private void activateRaise(){
-        if (!isMyServiceRunning(RaisetowakeService.class)) {
-            Intent intent = new Intent(this, RaisetowakeService.class);
+    private void activateRaiseToWake(){
+        if (!isMyServiceRunning(RaiseToWakeService.class)) {
+            Intent intent = new Intent(this, RaiseToWakeService.class);
             startService(intent);
+        }
+    }
+
+    private void stopRaiseToWake(){
+        if(isMyServiceRunning(RaiseToWakeService.class)){
+            stopService(new Intent(this, RaiseToWakeService.class));
         }
     }
 

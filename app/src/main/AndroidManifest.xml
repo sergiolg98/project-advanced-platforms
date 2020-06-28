@@ -38,7 +38,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
-            android:name=".background.RaisetowakeService" android:exported="false" />
+            android:name=".background.RaiseToWakeService" android:exported="false" />
 
     </application>
 

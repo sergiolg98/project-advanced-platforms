@@ -15,7 +15,7 @@ import android.util.Log;
 import static android.content.ContentValues.TAG;
 
 
-public class RaisetowakeService extends Service implements SensorEventListener {
+public class RaiseToWakeService extends Service implements SensorEventListener {
 
     private final float[] mAccelerometerReading = new float[3];
     private final float[] mMagnetometerReading = new float[3];
@@ -86,5 +86,11 @@ public class RaisetowakeService extends Service implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("RaiseToWake", "Stopped after onDestroy");
     }
 }
