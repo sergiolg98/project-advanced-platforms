@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
 
     private static final int JOB_ID = 123;
-    private static final long REFRESH_INTERVAL  = 5 * 60 * 1000; // 5 seconds
+    private static final long REFRESH_INTERVAL  = 5 * 60 * 1000; // 15 minutes
 
     ImageView btAdjustRaseToWake;
     SharedPreferences pref;
@@ -149,8 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-    /** Start Experimental */
-
+    /** Raise To Wake Methods*/
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -174,7 +173,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    /** End Experimental*/
 
 
     /***
