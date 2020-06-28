@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,16 +16,28 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.project.R;
 import com.project.config.ConstValue;
 import com.project.network.Provider;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     Context context;
     ProgressDialog dataDialog;
+    SharedPreferences pref;
 
     Button btLogin, btRegister, btMakeLogin, btMakeRegister;
     EditText loginUsername, loginPassword, registerName, registerLastname,registerEmail, registerUsername, registerPassword;
@@ -35,47 +49,61 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         context = this;
-        initWidgets();
 
-        btLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Simular Login ...", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
-                startActivity(i);
-            }
-        });
 
-        btRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginLayout.setVisibility(View.GONE);
-                registerLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        if(!checkLogin()){
+            initWidgets();
 
-        btMakeLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginLayout.setVisibility(View.VISIBLE);
-                registerLayout.setVisibility(View.GONE);
-            }
-        });
-
-        btMakeRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(validateFields("R")){
-                    new RegisterTask().execute(
-                            registerName.getText().toString(), registerLastname.getText().toString(),
-                            registerUsername.getText().toString(), registerEmail.getText().toString(),
-                            registerPassword.getText().toString());
+            btLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(validateFields("L")){
+                        userLogin();
+                    }
+                    else Toast.makeText(context, "Todos los campos deben ser completados", Toast.LENGTH_SHORT).show();
                 }
-                else Toast.makeText(context, "Todos los campos deben ser completados", Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
 
+            btRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loginLayout.setVisibility(View.GONE);
+                    registerLayout.setVisibility(View.VISIBLE);
+                }
+            });
 
+            btMakeLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loginLayout.setVisibility(View.VISIBLE);
+                    registerLayout.setVisibility(View.GONE);
+                }
+            });
+
+            btMakeRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(validateFields("R")){
+                        new RegisterTask().execute(
+                                registerName.getText().toString(), registerLastname.getText().toString(),
+                                registerUsername.getText().toString(), registerEmail.getText().toString(),
+                                registerPassword.getText().toString());
+                    }
+                    else Toast.makeText(context, "Todos los campos deben ser completados", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            finish();
+            startActivity(new Intent(this, DashboardActivity.class));
+        }
+    }
+
+    private boolean checkLogin(){
+        pref = getSharedPreferences("userAuthenticated", Context.MODE_PRIVATE);
+        String state = pref.getString("userState", "");
+        if(state.equals("activeUser")) return true;
+        else return false; //Any other case, it will be ""
     }
 
     private void initWidgets(){
@@ -109,10 +137,80 @@ public class LoginActivity extends AppCompatActivity {
         }
         else if(type.equals("L")){
             //Login
+            if(loginUsername.getText().toString().equals("")) return false;
+            else if(loginPassword.getText().toString().equals("")) return false;
         }
         return true;
     }
 
+    /* Method using Volley Library which creates itself a background threat to perform a network operation */
+    private void userLogin(){
+        try {
+            dataDialog = ProgressDialog.show(context, "Cargando", "Iniciando sesión ...", true);
+            JSONObject jsonobj = new JSONObject();
+            jsonobj.put("username", loginUsername.getText().toString());
+            jsonobj.put("password", loginPassword.getText().toString());
+            Log.i("JSON for SEND: ", jsonobj.toString());
+
+            RequestQueue requestQueue;
+            try {
+                requestQueue = Volley.newRequestQueue(context);
+                JsonObjectRequest jsonOblect = new JsonObjectRequest(Request.Method.POST,
+                        ConstValue.LOGIN, jsonobj, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("VOLLEY-Login: Success", response.toString());
+                        if(response.has("response")){
+                            dataDialog.dismiss();
+                            try {
+                                if(response.get("response").equals("success")){
+
+                                    /* Store in SharedPreferences */
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString("userState", "activeUser");
+                                    editor.putString("userName", response.getJSONObject("data").getString("name"));
+                                    editor.putString("userLastname", response.getJSONObject("data").getString("lastname"));
+                                    editor.apply();
+
+                                    finish();
+                                    context.startActivity(new Intent(context, DashboardActivity.class));
+                                    Toast.makeText(context, "Inicio de sesión exitoso.", Toast.LENGTH_SHORT).show();
+                                }
+                                else if(response.get("response").equals("error")){
+                                    Toast.makeText(context, "Datos incorrectos.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "Hubo un error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("VOLLEY-Login: Error", error.toString());
+                        dataDialog.dismiss();
+                        Toast.makeText(context, "Hubo un error.", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        final Map<String, String> headers = new HashMap<>();
+                        return headers;
+                    }
+                };
+                requestQueue.add(jsonOblect);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                dataDialog.dismiss();
+                Toast.makeText(context, "Error general: " + e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /* AsyncTask for sending data */
     class RegisterTask extends AsyncTask<String, Void, String> {
@@ -126,9 +224,7 @@ public class LoginActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             dataDialog.dismiss();
             if(result.equals("")){
-                finish();
-                context.startActivity(new Intent(context, DashboardActivity.class));
-                Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Registro exitoso! Ahora puedes iniciar sesión con nosotros.", Toast.LENGTH_LONG).show();
             }
             else {
                 Toast.makeText(context, "Error: " + result, Toast.LENGTH_SHORT).show();

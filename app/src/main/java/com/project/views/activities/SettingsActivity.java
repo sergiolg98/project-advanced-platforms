@@ -38,7 +38,9 @@ public class SettingsActivity extends AppCompatActivity {
                 if(state.equals("")){
                     /* Activate JobService */
                     SharedPreferences.Editor editor = pref .edit();
-                    editor.putString("state", "active"); editor.apply();
+                    editor.putString("state", "active");
+                    editor.apply();
+
                     scheduleJob();
                     btAdjustBright.setImageResource(R.drawable.light_setting_on);
                 }
@@ -46,14 +48,18 @@ public class SettingsActivity extends AppCompatActivity {
                     if(state.equals("inactive")){
                         /* Activate JobService  */
                         SharedPreferences.Editor editor = pref .edit();
-                        editor.putString("state", "active"); editor.apply();
+                        editor.putString("state", "active");
+                        editor.apply();
+
                         scheduleJob();
                         btAdjustBright.setImageResource(R.drawable.light_setting_on);
                     }
                     else if(state.equals("active")){
                         /* Stop JobService */
                         SharedPreferences.Editor editor = pref .edit();
-                        editor.putString("state", "inactive"); editor.apply();
+                        editor.putString("state", "inactive");
+                        editor.apply();
+
                         cancelJob();
                         btAdjustBright.setImageResource(R.drawable.light_setting_off);
                     }
@@ -114,6 +120,7 @@ public class SettingsActivity extends AppCompatActivity {
             * About (Info sobre el desarrollo)
             * Settings (Pantalla normal con Shared Preferences para los Ajustes con Preferencias)
      * Desarrollo
+         * Implementar botón de logout donde se borre el SharedPreference a "" para que siga funcionando
          * Service que corra por detrás (JobScheduler) -> Enviar todos los datos de abajo
             * Detectar ubicación con GPS
             * Determinar orientación del dispositivo (Acelerometro)

@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.project.config.ConstValue;
 
 import org.json.JSONObject;
 
@@ -27,14 +28,13 @@ public class Provider {
             JsonObjectRequest jsonOblect = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    ConstValue.setServerResponse(response);
                     Log.i("VOLLEY SUCCESS", response.toString());
-                    //Toast.makeText(context, "Response:  " + response.toString(), Toast.LENGTH_SHORT).show();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.i("VOLLEY ERROR", error.toString());
-                    //Toast.makeText(context, "Response:  " + error.toString(), Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
@@ -49,8 +49,5 @@ public class Provider {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
-
     }
-
 }
