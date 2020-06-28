@@ -111,6 +111,11 @@ public class SettingsActivity extends AppCompatActivity {
         Log.i(TAG, "Job Cancelled");
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     /***
      * Interfaces
@@ -120,7 +125,7 @@ public class SettingsActivity extends AppCompatActivity {
             * About (Info sobre el desarrollo)
             * Settings (Pantalla normal con Shared Preferences para los Ajustes con Preferencias)
      * Desarrollo
-         * Implementar botón de logout donde se borre el SharedPreference a "" para que siga funcionando
+         * Hacer que el Logout -> desactive los servicios si hay corriendo
          * Service que corra por detrás (JobScheduler) -> Enviar todos los datos de abajo
             * Detectar ubicación con GPS
             * Determinar orientación del dispositivo (Acelerometro)

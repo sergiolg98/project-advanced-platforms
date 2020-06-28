@@ -10,19 +10,23 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.project.R;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    ImageView btSettings, btInfo, btProfile, btLogout;
+    Context context;
     SharedPreferences pref;
+
+    ImageView btSettings, btInfo, btProfile, btLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        context = this;
         initWidgets();
 
         btSettings.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +44,12 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        btProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "En construcción ...", Toast.LENGTH_SHORT).show();
+            }
+        });
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
