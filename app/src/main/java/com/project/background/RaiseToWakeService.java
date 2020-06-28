@@ -1,16 +1,28 @@
 package com.project.background;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+
+import com.project.R;
+import com.project.views.activities.SettingsActivity;
 
 import static android.content.ContentValues.TAG;
 
@@ -48,6 +60,49 @@ public class RaiseToWakeService extends Service implements SensorEventListener {
     @Override
     public int onStartCommand (Intent intent, int flags, int startId) {
         Log.i(TAG, "Raisetowake service started!");
+        Intent main_intent = new Intent(this, SettingsActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, main_intent, 0);
+
+        /* Solo para revisar que en dispositivos superiores a Oreo funcione bien */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            String NOTIFICATION_CHANNEL_ID = "com.project";
+            String channelName = "RaiseToWakeService";
+            NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+            chan.setLightColor(Color.BLUE);
+            chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            assert manager != null;
+            manager.createNotificationChannel(chan);
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+            Notification notification = notificationBuilder
+                    .setOngoing(true)
+                    .setContentTitle("Raise To Wake")
+                    .setContentText("Servicio ejecutándose en background.")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentIntent(pendingIntent)
+                    .setTicker("RaiseToWake")
+                    .setPriority(NotificationManager.IMPORTANCE_MIN)
+                    .setCategory(Notification.CATEGORY_SERVICE)
+                    .build();
+            startForeground(123, notification);
+        }
+
+        else {
+            Notification notification = new Notification.Builder(this)
+                    .setContentTitle("Raise To Wake")
+                    .setContentText("Servicio ejecutándose en background.")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentIntent(pendingIntent)
+                    .setTicker("RaiseToWake")
+                    .setOngoing(true)
+                    .build();
+
+            notification.flags = notification.flags | Notification.FLAG_NO_CLEAR;
+            startForeground(123, notification);
+
+        }
+
         pm = (PowerManager) getSystemService(POWER_SERVICE);
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI, new Handler());
