@@ -47,7 +47,7 @@ public class DashboardActivity extends AppCompatActivity {
         btProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "En construcción ...", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
             }
         });
         btLogout.setOnClickListener(new View.OnClickListener() {

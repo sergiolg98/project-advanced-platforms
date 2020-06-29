@@ -7,8 +7,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" android:required="true" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -18,8 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".views.activities.ProfileActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
             android:name=".views.activities.InfoActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".views.activities.DashboardActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -39,12 +46,12 @@
         <service
             android:name=".background.DataJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <service
-            android:name=".background.RaiseToWakeService" android:exported="false" />
+            android:name=".background.RaiseToWakeService"
+            android:exported="false" />
         <service
-            android:name=".background.BrightAdjustService" android:exported="false" />
-
+            android:name=".background.BrightAdjustService"
+            android:exported="false" />
     </application>
 
 </manifest>

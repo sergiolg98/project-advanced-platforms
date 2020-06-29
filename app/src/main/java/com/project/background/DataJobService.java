@@ -19,6 +19,8 @@ public class DataJobService extends JobService {
     private void doBackgroundWork(JobParameters params){
         if(jobCancelled) return;
 
+        /* Anadir el envio de coordenadas GPS */
+
         Toast.makeText(getApplicationContext(), "Doing background work", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "Job finished");
         jobFinished(params, false);

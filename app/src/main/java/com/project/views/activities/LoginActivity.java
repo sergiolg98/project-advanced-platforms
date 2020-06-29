@@ -168,6 +168,8 @@ public class LoginActivity extends AppCompatActivity {
                                     /* Store in SharedPreferences */
                                     SharedPreferences.Editor editor = pref.edit();
                                     editor.putString("userState", "activeUser");
+                                    editor.putString("username_short", response.getJSONObject("data").getString("username"));
+                                    editor.putString("userEmail", response.getJSONObject("data").getString("email"));
                                     editor.putString("userName", response.getJSONObject("data").getString("name"));
                                     editor.putString("userLastname", response.getJSONObject("data").getString("lastname"));
                                     editor.apply();

@@ -161,23 +161,23 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    /* Los datos se enviarán cada 15 min al servidor */
     public void scheduleJob(){
         ComponentName componentName = new ComponentName(this, DataJobService.class);
         JobInfo info;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            /** Para nougatt corre cada 15 minutos */
             info = new JobInfo.Builder(JOB_ID, componentName)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                     .setPersisted(true)
                     .setMinimumLatency(REFRESH_INTERVAL)
                     .build();
         } else {
-            /** Dispositivos anteriores normal, funciona cada 5s */
+            /* En versiones antiguas se puede hacer que corra en menos de 15 m.*/
             info = new JobInfo.Builder(JOB_ID, componentName)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                     .setPersisted(true)
-                    .setPeriodic(5*1000)
+                    .setPeriodic(REFRESH_INTERVAL)
                     .build();
         }
 
