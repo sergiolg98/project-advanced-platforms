@@ -23,7 +23,7 @@ import com.project.background.RaiseToWakeService;
 public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
 
-    private static final int JOB_ID = 123;
+    private static final int JOB_ID = 210798;
     private static final long REFRESH_INTERVAL  = 5 * 60 * 1000; // 15 minutes
 
     ImageView btAdjustRaseToWake, btAdjustBright;
@@ -193,7 +193,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void cancelJob(){
         JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        scheduler.cancel(123);
+        scheduler.cancel(210798);
         Log.i(TAG, "Job Cancelled");
     }
 
@@ -237,7 +237,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void stopAutomaticBright(){
-        if(isMyServiceRunning(RaiseToWakeService.class)){
+        if(isMyServiceRunning(BrightAdjustService.class)){
             stopService(new Intent(this, BrightAdjustService.class));
         }
     }
