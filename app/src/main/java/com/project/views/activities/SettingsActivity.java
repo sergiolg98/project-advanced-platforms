@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.R;
+import com.project.background.BrightAdjustService;
 import com.project.background.DataJobService;
 import com.project.background.RaiseToWakeService;
 
@@ -25,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final int JOB_ID = 123;
     private static final long REFRESH_INTERVAL  = 5 * 60 * 1000; // 15 minutes
 
-    ImageView btAdjustRaseToWake;
+    ImageView btAdjustRaseToWake, btAdjustBright;
     SharedPreferences pref;
 
     @Override
@@ -88,13 +89,55 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        btAdjustBright.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                pref = getSharedPreferences("automaticBright", Context.MODE_PRIVATE);
+                String state = pref.getString("state", "");
+
+                if(state.equals("")){
+                    activateAutomaticBright();
+
+                    /*Store Preferences*/
+                    SharedPreferences.Editor editor = pref .edit();
+                    editor.putString("state", "active");
+                    editor.apply();
+                    btAdjustBright.setImageResource(R.drawable.light_setting_on);
+                }
+                else{
+                    if(state.equals("inactive")){
+                        activateAutomaticBright();
+
+                        /*Store Preferences*/
+                        SharedPreferences.Editor editor = pref .edit();
+                        editor.putString("state", "active");
+                        editor.apply();
+                        btAdjustBright.setImageResource(R.drawable.light_setting_on);
+                    }
+                    else if(state.equals("active")){
+                        stopAutomaticBright();
+
+                        /*Store Preferences*/
+                        SharedPreferences.Editor editor = pref .edit();
+                        editor.putString("state", "inactive");
+                        editor.apply();
+                        btAdjustBright.setImageResource(R.drawable.light_setting_off);
+                    }
+
+                }
+
+            }
+        });
+
 
     }
 
     private void initWidgets(){
         btAdjustRaseToWake = findViewById(R.id.bt_adjust_rase_to_wake);
+        btAdjustBright = findViewById(R.id.bt_automatic_adjust_bright);
 
-        /* Init icon*/
+        /* Init RaiseToWake icon*/
         pref = getSharedPreferences("automaticRaseToWake", Context.MODE_PRIVATE);
         String state = pref.getString("state", "");
         if(state.equals("")){
@@ -103,6 +146,17 @@ public class SettingsActivity extends AppCompatActivity {
         else {
             if (state.equals("inactive")) btAdjustRaseToWake.setImageResource(R.drawable.raise_off);
             else if(state.equals("active")) btAdjustRaseToWake.setImageResource(R.drawable.raise_on);
+        }
+
+        /* Init AutomaticBrightAdjust icon*/
+        pref = getSharedPreferences("automaticBright", Context.MODE_PRIVATE);
+        state = pref.getString("state", "");
+        if(state.equals("")){
+            btAdjustBright.setImageResource(R.drawable.light_setting_off);
+        }
+        else {
+            if (state.equals("inactive")) btAdjustBright.setImageResource(R.drawable.light_setting_off);
+            else if(state.equals("active")) btAdjustBright.setImageResource(R.drawable.light_setting_on);
         }
 
     }
@@ -149,7 +203,7 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-    /** Raise To Wake Methods*/
+
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -160,6 +214,7 @@ public class SettingsActivity extends AppCompatActivity {
         return false;
     }
 
+    /** Raise To Wake Methods*/
     private void activateRaiseToWake(){
         if (!isMyServiceRunning(RaiseToWakeService.class)) {
             Intent intent = new Intent(this, RaiseToWakeService.class);
@@ -170,6 +225,20 @@ public class SettingsActivity extends AppCompatActivity {
     private void stopRaiseToWake(){
         if(isMyServiceRunning(RaiseToWakeService.class)){
             stopService(new Intent(this, RaiseToWakeService.class));
+        }
+    }
+
+    /** Automatic Bright Adjust Methods */
+    private void activateAutomaticBright(){
+        if (!isMyServiceRunning(BrightAdjustService.class)) {
+            Intent intent = new Intent(this, BrightAdjustService.class);
+            startService(intent);
+        }
+    }
+
+    private void stopAutomaticBright(){
+        if(isMyServiceRunning(RaiseToWakeService.class)){
+            stopService(new Intent(this, BrightAdjustService.class));
         }
     }
 
