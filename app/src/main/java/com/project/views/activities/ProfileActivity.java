@@ -11,7 +11,7 @@ import com.project.R;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView txFullName, txEmail, txUsername;
+    TextView txFullName, txEmail, txUsername, txDateRegistered;
     SharedPreferences pref;
 
     @Override
@@ -31,13 +31,15 @@ public class ProfileActivity extends AppCompatActivity {
         txFullName = findViewById(R.id.tx_full_name);
         txEmail = findViewById(R.id.tx_mail);
         txUsername = findViewById(R.id.tx_username);
+        txDateRegistered = findViewById(R.id.tx_date_registered);
     }
 
     private void setContents(){
         pref = getSharedPreferences("userAuthenticated", Context.MODE_PRIVATE);
-        txUsername.setText(pref.getString("username_short", ""));
+        txUsername.setText("@" + pref.getString("username_short", ""));
         txFullName.setText(pref.getString("userName", "") + " " + pref.getString("userLastname", ""));
         txEmail.setText(pref.getString("userEmail", ""));
+        txDateRegistered.setText(pref.getString("userDateRegistered",""));
     }
 
     @Override

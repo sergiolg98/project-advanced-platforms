@@ -43,11 +43,11 @@
                     android:layout_marginLeft="20sp"
                     android:layout_marginTop="40sp"
                     android:layout_marginRight="20sp"
-                    android:hint="Usuario"
-                    android:text="slaureano"
                     android:drawableLeft="@drawable/ic_person_outline_black_24dp"
                     android:drawablePadding="10sp"
+                    android:hint="Usuario"
                     android:inputType="text"
+                    android:text="test"
                     android:textSize="14sp" />
 
                 <EditText
