@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_margin="20sp"
     tools:context=".views.activities.InfoActivity">
 
     <ScrollView
@@ -15,7 +16,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20sp"
             android:orientation="vertical" >
 
             <TextView
@@ -41,6 +41,43 @@
                 android:textAlignment="center"
                 android:textStyle="italic" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:text="Sensores utilizados"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15sp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50sp"
+                        app:srcCompat="@drawable/light_sensor_icon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sensor de Luz"
+                        android:layout_marginTop="10sp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+            </TableRow>
+
+
             <ImageView
                 android:id="@+id/bt_raise_info"
                 android:layout_width="match_parent"
@@ -55,6 +92,79 @@
                 android:text="No te desgastes! Levanta tu dispositivo para que se encienda rápidamente."
                 android:textAlignment="center"
                 android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:text="Sensores utilizados"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="20sp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50sp"
+                        app:srcCompat="@drawable/accelerometer_icon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Acelerómetro"
+                        android:layout_marginTop="10sp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50sp"
+                        app:srcCompat="@drawable/magnetometer_icon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Magnetómetro"
+                        android:layout_marginTop="10sp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/tx_app_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2020 - Desarrollo en Nuevas Plataformas Avanzado v1.0"
+                android:textAlignment="center"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tx_dev_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Desarrollada por: Sergio Laureano y Aaron Cochachin"
+                android:textAlignment="center"
+                android:textSize="10sp" />
+
 
         </LinearLayout>
     </ScrollView>
