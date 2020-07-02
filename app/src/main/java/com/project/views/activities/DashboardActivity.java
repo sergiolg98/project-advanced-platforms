@@ -3,6 +3,7 @@ package com.project.views.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.R;
+import com.project.background.BrightAdjustService;
+import com.project.background.RaiseToWakeService;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -61,14 +64,34 @@ public class DashboardActivity extends AppCompatActivity {
                         .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
+                                /* Resetear preferencias */
                                 pref = getSharedPreferences("userAuthenticated", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("userState", "");
                                 editor.putString("userName", "");
                                 editor.putString("userLastname", "");
+                                editor.putString("userDateRegistered", "");
+                                editor.putString("username_short", "");
                                 editor.apply();
 
-                                /* Falta desactivar los servicios */
+                                pref = getSharedPreferences("automaticBright", Context.MODE_PRIVATE);
+                                editor = pref.edit();
+                                editor.putString("state", "inactive");
+                                editor.apply();
+
+                                pref = getSharedPreferences("automaticRaseToWake", Context.MODE_PRIVATE);
+                                editor = pref.edit();
+                                editor.putString("state", "inactive");
+                                editor.apply();
+
+                                /* Desactivar los servicios */
+                                if(isMyServiceRunning(RaiseToWakeService.class)){
+                                    stopService(new Intent(DashboardActivity.this, RaiseToWakeService.class));
+                                }
+                                if(isMyServiceRunning(BrightAdjustService.class)){
+                                    stopService(new Intent(DashboardActivity.this, BrightAdjustService.class));
+                                }
 
                                 finish();
                                 startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
@@ -84,5 +107,15 @@ public class DashboardActivity extends AppCompatActivity {
         btInfo = findViewById(R.id.bt_info);
         btProfile = findViewById(R.id.bt_profile);
         btLogout = findViewById(R.id.bt_logout);
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
