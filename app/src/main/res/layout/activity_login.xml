@@ -47,7 +47,6 @@
                     android:drawablePadding="10sp"
                     android:hint="Usuario"
                     android:inputType="text"
-                    android:text="test"
                     android:textSize="14sp" />
 
                 <EditText
@@ -57,10 +56,9 @@
                     android:layout_marginLeft="20sp"
                     android:layout_marginTop="20sp"
                     android:layout_marginRight="20sp"
-                    android:hint="Contraseña"
-                    android:text="1234"
                     android:drawableLeft="@drawable/ic_lock_black_24dp"
                     android:drawablePadding="10sp"
+                    android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:textSize="14sp" />
 

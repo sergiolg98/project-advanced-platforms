@@ -10,6 +10,7 @@ public class ConstValue {
     //public static String SITE_URL = "http://localhost:3000";   //LOCAL
     public static String LOGIN = SITE_URL + "/api/login/";
     public static String USER = SITE_URL + "/api/user/";
+    public static String INFORMATION = SITE_URL + "/api/information/";
 
     public static JSONObject serverResponse;
     public static JSONObject getServerResponse() { return serverResponse; } public static void setServerResponse(JSONObject serverResponse) { ConstValue.serverResponse = serverResponse; }

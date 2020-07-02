@@ -73,6 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 editor.putString("userLastname", "");
                                 editor.putString("userDateRegistered", "");
                                 editor.putString("username_short", "");
+                                editor.putString("userId", "");
                                 editor.apply();
 
                                 pref = getSharedPreferences("automaticBright", Context.MODE_PRIVATE);

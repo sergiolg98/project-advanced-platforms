@@ -170,7 +170,7 @@ public class SettingsActivity extends AppCompatActivity {
             info = new JobInfo.Builder(JOB_ID, componentName)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                     .setPersisted(true)
-                    .setMinimumLatency(REFRESH_INTERVAL)
+                    .setPeriodic(REFRESH_INTERVAL)  //For Testing: .setMinimumLatency(5*1000)
                     .build();
         } else {
             /* En versiones antiguas se puede hacer que corra en menos de 15 m.*/
@@ -241,29 +241,4 @@ public class SettingsActivity extends AppCompatActivity {
             stopService(new Intent(this, BrightAdjustService.class));
         }
     }
-
-
-
-    /***
-     * Interfaces
-        * Login / Register
-        * Profile (Un card más en Dashboard) -> lleve a una vista donde se muestren sus datos
-        * Dashboard (lleva  Settings y About)
-            * About (Info sobre el desarrollo)
-            * Settings (Pantalla normal con Shared Preferences para los Ajustes con Preferencias)
-     * Desarrollo
-         * Hacer que el Logout -> desactive los servicios si hay corriendo
-         * Service que haga que la luz baje por detrás
-         * Service para el Raise to Wake
-         * Service que corra por detrás (JobScheduler) -> Enviar todos los datos de abajo
-            * Detectar ubicación con GPS
-            * Determinar orientación del dispositivo (Acelerometro)
-            * Detectar movimiento (Acelerometro)
-            * Bluetooth? (Ver donde se podría aplicar la comunicación)
-     * Entregables
-        * Subir a un Repositorio (Android & NodeJS)
-        * Informe con capturas.
-        * Flujo de como funciona la app (Opcional)
-     */
-
 }

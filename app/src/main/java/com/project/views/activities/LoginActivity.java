@@ -173,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("userName", response.getJSONObject("data").getString("name"));
                                     editor.putString("userLastname", response.getJSONObject("data").getString("lastname"));
                                     editor.putString("userDateRegistered", response.getJSONObject("data").getString("createdAt"));
+                                    editor.putString("userId", response.getJSONObject("data").getString("id"));
                                     editor.apply();
 
                                     finish();
