@@ -114,9 +114,6 @@ public class BrightAdjustService extends Service implements SensorEventListener 
         maxValue = lightSensor.getMaximumRange();
         Log.i("MAX VALUE SENSOR: ",String.valueOf(maxValue));
         float value = sensorEvent.values[0];
-        // between 0 and 255
-        //int newValue = (int) (255f * value / maxValue);
-        //root.setBackgroundColor(Color.rgb(newValue, newValue, newValue));
 
         int displayBright = (int) (227f * value/ (maxValue/50));
         Log.i("BRIGHT TO SHOW", String.valueOf(displayBright));

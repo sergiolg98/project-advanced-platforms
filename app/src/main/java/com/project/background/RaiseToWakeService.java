@@ -128,7 +128,8 @@ public class RaiseToWakeService extends Service implements SensorEventListener {
 
             if (phone_was_horizontal && isPhoneFaceUp() && ((angle >= -1) && (angle < -0.5))) {
                 //wake up
-                @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock screenLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Raiso");
+                @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock screenLock =
+                        pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "RaiseToWake");
                 screenLock.acquire(1); //automatically release it
                 phone_was_horizontal = false;
             } else if (Math.abs(angle) < 0.5){
