@@ -62,7 +62,8 @@ public class NewsFeedActivity extends AppCompatActivity {
                                 JSONArray jsonArray = response.getJSONArray("images");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject objectInArray = jsonArray.getJSONObject(i);
-                                    ImageModel imageModel = new ImageModel(objectInArray.getString("user_id"), objectInArray.getString("image"));
+                                    ImageModel imageModel = new ImageModel(objectInArray.getString("user_id"), objectInArray.getString("image"),
+                                            objectInArray.getString("user_name"), objectInArray.getString("description"));
                                     imageArray.add(imageModel);
                                 }
                                 PhotoAdapter photoAdapter = new PhotoAdapter(context, imageArray);

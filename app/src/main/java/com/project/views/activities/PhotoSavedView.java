@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class PhotoSavedView extends AppCompatActivity {
 
     private Context context;
     private ImageView previewPhoto, buttonShare;
+    private EditText inputDescription;
     private TextView txUsername;
     private SharedPreferences pref;
     private ProgressDialog pDialog;
@@ -79,6 +81,8 @@ public class PhotoSavedView extends AppCompatActivity {
                 JSONObject jsonobj = new JSONObject();
                 try {
                     jsonobj.put("user_id", pref.getString("userId", ""));
+                    jsonobj.put("user_name", pref.getString("username_short", ""));
+                    jsonobj.put("description", inputDescription.getText().toString());
                     jsonobj.put("image", imageEncode);
 
                 } catch (JSONException e) {
@@ -133,6 +137,7 @@ public class PhotoSavedView extends AppCompatActivity {
 
     private void initWidgets(){
         previewPhoto = findViewById(R.id.img_preview);
+        inputDescription = findViewById(R.id.et_description);
         txUsername = findViewById(R.id.tx_username_preview);
         buttonShare = findViewById(R.id.bt_share);
     }

@@ -56,16 +56,22 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView previewPhoto;
+        public TextView username, description;
 
         public ViewHolder(View itemView) {
             super(itemView);
             previewPhoto = (ImageView) itemView.findViewById(R.id.img_photo);
+            username = (TextView) itemView.findViewById(R.id.tx_username_gotten);
+            description = (TextView) itemView.findViewById(R.id.tx_description_gotten);
         }
 
         public void bind(ImageModel model){
             byte[] decodedString = Base64.decode(model.getImageBase64(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             Glide.with(context).load(decodedByte).into(previewPhoto);
+
+            username.setText("@" + model.getUsername());
+            description.setText(model.getDescription());
         }
 
     }
