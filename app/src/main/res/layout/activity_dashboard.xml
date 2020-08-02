@@ -72,11 +72,25 @@
                     app:srcCompat="@drawable/profile_card" />
 
                 <ImageView
+                    android:id="@+id/bt_instaphoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="250sp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/instaphoto_card" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
                     android:id="@+id/bt_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="250sp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/logout_card" />
+
             </TableRow>
 
 

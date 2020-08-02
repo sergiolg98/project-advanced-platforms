@@ -11,6 +11,7 @@ public class ConstValue {
     public static String LOGIN = SITE_URL + "/api/login/";
     public static String USER = SITE_URL + "/api/user/";
     public static String INFORMATION = SITE_URL + "/api/information/";
+    public static String IMAGE = SITE_URL + "/api/image/";
 
     public static JSONObject serverResponse;
     public static JSONObject getServerResponse() { return serverResponse; } public static void setServerResponse(JSONObject serverResponse) { ConstValue.serverResponse = serverResponse; }
@@ -25,4 +26,7 @@ public class ConstValue {
     public static String name;
     public static String getName() { return name; } public static void setName(String name) { ConstValue.name = name; }
 
+    //PhotoPath
+    public static String photoPath;
+    public static String getPhotoPath() { return photoPath; } public static void setPhotoPath(String photoPath) { ConstValue.photoPath = photoPath; }
 }
