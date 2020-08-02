@@ -1,6 +1,7 @@
 package com.project.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
@@ -16,11 +17,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.project.R;
+import com.project.adapters.PhotoAdapter;
 import com.project.config.ConstValue;
+import com.project.models.ImageModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +41,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_feed);
 
         context = this;
+        initWidgets();
 
         pDialog = new ProgressDialog(context);
         pDialog.setMessage("Loading...");
@@ -49,9 +55,25 @@ public class NewsFeedActivity extends AppCompatActivity {
                     {
                         @Override
                         public void onResponse(JSONObject response) {
-                            hidePDialog();
+
                             Log.i("VOLLEY-Img: Success", response.toString());
-                            
+                            ArrayList<ImageModel> imageArray = new ArrayList<>();
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("images");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject objectInArray = jsonArray.getJSONObject(i);
+                                    ImageModel imageModel = new ImageModel(objectInArray.getString("user_id"), objectInArray.getString("image"));
+                                    imageArray.add(imageModel);
+                                }
+                                PhotoAdapter photoAdapter = new PhotoAdapter(context, imageArray);
+                                recyclerView.setAdapter(photoAdapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                hidePDialog();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     },
                     new Response.ErrorListener()
