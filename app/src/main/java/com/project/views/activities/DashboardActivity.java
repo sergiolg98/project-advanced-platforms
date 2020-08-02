@@ -22,7 +22,7 @@ public class DashboardActivity extends AppCompatActivity {
     Context context;
     SharedPreferences pref;
 
-    ImageView btSettings, btInfo, btProfile, btInstaPhoto, btLogout;
+    ImageView btSettings, btInfo, btProfile, btInstaPhoto, btExplore, btLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,13 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
+            }
+        });
+
+        btExplore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, NewsFeedActivity.class));
             }
         });
 
@@ -116,6 +123,7 @@ public class DashboardActivity extends AppCompatActivity {
         btInfo = findViewById(R.id.bt_info);
         btProfile = findViewById(R.id.bt_profile);
         btInstaPhoto = findViewById(R.id.bt_instaphoto);
+        btExplore = findViewById(R.id.bt_explore);
         btLogout = findViewById(R.id.bt_logout);
     }
 
