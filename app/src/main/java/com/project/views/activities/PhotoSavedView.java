@@ -1,9 +1,12 @@
 package com.project.views.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +28,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.project.R;
+import com.project.background.BrightAdjustService;
+import com.project.background.RaiseToWakeService;
 import com.project.config.ConstValue;
 
 import org.json.JSONException;
@@ -63,7 +68,7 @@ public class PhotoSavedView extends AppCompatActivity {
             public void onClick(View v) {
 
                 pDialog = new ProgressDialog(context);
-                pDialog.setMessage("Loading...");
+                pDialog.setMessage("Cargando ...");
                 pDialog.show();
 
                 //Transform image into Base64
@@ -102,6 +107,18 @@ public class PhotoSavedView extends AppCompatActivity {
                             if(response.has("response")){
                                 try {
                                     if(response.get("response").equals("success")){
+                                        new AlertDialog.Builder(PhotoSavedView.this)
+                                                .setTitle("Foto Compartida")
+                                                .setMessage("Gracias por compartir tu foto con nosotros. Puedes verla en la sección Explorar!")
+                                                .setNegativeButton("Cancelar", null)
+                                                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        finish();
+                                                    }
+                                                })
+                                                .setCancelable(false)
+                                                .show();
                                         Log.i("InfoService", "Information Sent and received");
                                     }
                                 } catch (JSONException e) {
@@ -132,7 +149,7 @@ public class PhotoSavedView extends AppCompatActivity {
     }
 
     private String getPhotoPath(){
-        return Environment.getExternalStorageDirectory() + "/" + ConstValue.getPhotoPath();
+        return getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + ConstValue.getPhotoPath();
     }
 
     private void initWidgets(){

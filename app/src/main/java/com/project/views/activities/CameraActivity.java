@@ -176,7 +176,7 @@ public class CameraActivity extends AppCompatActivity {
                 width = jpegSizes[0].getWidth();
                 height = jpegSizes[0].getHeight();
             }
-            ImageReader reader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1);
+            ImageReader reader =  ImageReader.newInstance(640, 480, ImageFormat.JPEG,1);
             List<Surface> outputSurfaces = new ArrayList<Surface>(2);
             outputSurfaces.add(reader.getSurface());
             outputSurfaces.add(new Surface(textureView.getSurfaceTexture()));
@@ -192,7 +192,8 @@ public class CameraActivity extends AppCompatActivity {
             long unixTime = now.getTime() / 1000L;
             final String photoName = "PIC_" + unixTime + ".jpg";
 
-            final File file = new File(Environment.getExternalStorageDirectory() + "/" + photoName);
+
+            final File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + photoName);
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {

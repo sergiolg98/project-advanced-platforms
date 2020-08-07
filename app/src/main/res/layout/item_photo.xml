@@ -17,6 +17,8 @@
         android:id="@+id/tx_username_gotten"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="8sp"
         android:text="*slaureano"
         android:textColor="#DDD"
         android:textStyle="bold" />
@@ -25,8 +27,8 @@
         android:id="@+id/tx_description_gotten"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
         android:text="Un amigo necesita de  personas maravillosas para poder triunfar en la vida"
-        android:textColor="#DDD"
-        android:textStyle="italic" />
+        android:textColor="#DDD" />
 
 </LinearLayout>

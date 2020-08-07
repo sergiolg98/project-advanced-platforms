@@ -44,7 +44,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         initWidgets();
 
         pDialog = new ProgressDialog(context);
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("Cargando ...");
         pDialog.show();
 
         RequestQueue requestQueue;
